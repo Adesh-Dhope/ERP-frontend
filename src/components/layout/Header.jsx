@@ -4,7 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 const Header = () => {
   return (
     <div className="pb-2">
-      <div className="w-full p-4 bg-white shadow-md rounded-md">
+      <div className="w-full p-4 bg-white border border-gray-300 rounded-md">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Title */}
           <div className="text-lg md:text-3xl font-semibold text-black">

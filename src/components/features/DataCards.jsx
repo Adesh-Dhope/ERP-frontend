@@ -25,7 +25,7 @@ const DataCards = () => {
       <StopCircleIcon size={28} />
     </div>
     <div className="w-3/4">
-      <h1 className="text-sm text-gray-500 text-start">Empty Bin %</h1>
+      <h1 className="text-sm text-gray-500 text-start">{"Recycle Bin (%)"}</h1>
       <h1 className="text-lg font-bold text-gray-800 text-start">12%</h1>
     </div>
   </div>
@@ -36,8 +36,8 @@ const DataCards = () => {
       <AccessTimeIcon size={28} />
     </div>
     <div className="w-3/4">
-      <h1 className="text-sm text-gray-500 text-start">Empty Bin %</h1>
-      <h1 className="text-lg font-bold text-gray-800 text-start">12%</h1>
+      <h1 className="text-sm text-gray-500 text-start">Non-Moving Items</h1>
+      <h1 className="text-lg font-bold text-gray-800 text-start">342</h1>
     </div>
   </div>
 
@@ -47,8 +47,8 @@ const DataCards = () => {
       <ArrowForwardIcon size={28} />
     </div>
     <div className="w-3/4 " >
-      <h1 className="text-sm text-gray-500 text-start">Empty Bin %</h1>
-      <h1 className="text-lg font-bold text-gray-800 text-start">12%</h1>
+      <h1 className="text-sm text-gray-500 text-start">{"Inward-Flow (Today)"}</h1>
+      <h1 className="text-lg font-bold text-gray-800 text-start">571</h1>
     </div>
   </div>
 </div>

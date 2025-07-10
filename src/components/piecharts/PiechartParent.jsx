@@ -1,8 +1,8 @@
 import React from "react";
-import StockByStorage from "./stockByStorage";
 import TaskDestribution from "./TaskDestribution";
 import MaterialType from "./MaterialType";
 import InwardOutward from "./InwardOutward";
+import StockByStorage from "./StockByStorage";
 
 const PiechartParent = () => {
   return (
