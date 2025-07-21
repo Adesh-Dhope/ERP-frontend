@@ -7,79 +7,87 @@ const MaterialType = () => {
   useEffect(() => {
     const chartInstance = echarts.init(chartRef.current);
 
- const option = {
-  tooltip: {
-    trigger: 'item',
-    formatter: '{b}<br/>{c} ({d}%)', // shows name, value, and percentage
-  },
-
-  legend: {
-  orient: 'vertical',
-  left: 0,
-  top: 'center',
-  textStyle: {
-    fontSize: 14,
-  },
-  formatter: function (name) {
-    const item = option.series[0].data.find((d) => d.name === name);
-    return `${name}\n${item?.value}%`;
-  },
-  rich: {
-    spacer: {
-      height: 16, // ~pt-4 (4 * 4px)
-    },
-    name: {
-      fontSize: 14,
-      color: '#000',
-      lineHeight: 20,
-    },
-    valueSpacer: {
-      height: 12, // ~pt-3
-    },
-    value: {
-      fontSize: 13,
-      color: '#555',
-      lineHeight: 18,
-    },
-  },
-},
-
-
-  series: [
-    {
-      type: 'pie',
-      radius: ['50%', '70%'],
-      center: ['65%', '50%'], // move chart to right
-      avoidLabelOverlap: false,
-      label: {
-        show: true,
-        position: 'center',
-        formatter: '25%',
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#1e88e5',
+    const option = {
+      // legend: {},
+      tooltip: {
+        trigger: 'axis',
+        showContent: false,
       },
-      emphasis: {
-        label: {
-          show: true,
-          fontSize: 24,
-          fontWeight: 'bold',
+      dataset: {
+        source: [
+          ['product', '2012', '2013', '2014', '2015', '2016', '2017'],
+          ['Milk Tea', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1],
+          ['Matcha Latte', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7],
+          ['Cheese Cocoa', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5],
+          ['Walnut Brownie', 25.2, 37.1, 41.2, 18, 33.9, 49.1],
+        ],
+      },
+      xAxis: { type: 'category' },
+      yAxis: { gridIndex: 0 },
+      grid: { top: '55%' },
+      series: [
+        {
+          type: 'line',
+          smooth: true,
+          seriesLayoutBy: 'row',
+          emphasis: { focus: 'series' },
         },
-      },
-      labelLine: {
-        show: false,
-      },
-      data: [
-        { value: 28, name: 'Raw Material', itemStyle: { color: '#1e88e5' } },
-        { value: 10, name: 'Spare Parts', itemStyle: { color: '#42a5f5' } },
-        { value: 10, name: 'Packaging', itemStyle: { color: '#90caf9' } },
+        {
+          type: 'line',
+          smooth: true,
+          seriesLayoutBy: 'row',
+          emphasis: { focus: 'series' },
+        },
+        {
+          type: 'line',
+          smooth: true,
+          seriesLayoutBy: 'row',
+          emphasis: { focus: 'series' },
+        },
+        {
+          type: 'line',
+          smooth: true,
+          seriesLayoutBy: 'row',
+          emphasis: { focus: 'series' },
+        },
+        {
+          type: 'pie',
+          id: 'pie',
+          radius: '30%',
+          center: ['50%', '25%'],
+          emphasis: { focus: 'self' },
+          label: {
+            formatter: '{b}: {@2012} ({d}%)',
+          },
+          encode: {
+            itemName: 'product',
+            value: '2012',
+            tooltip: '2012',
+          },
+        },
       ],
-    },
-  ],
-};
-
+    };
 
     chartInstance.setOption(option);
+
+    chartInstance.on('updateAxisPointer', function (event) {
+      const xAxisInfo = event.axesInfo[0];
+      if (xAxisInfo) {
+        const dimension = xAxisInfo.value + 1;
+        chartInstance.setOption({
+          series: {
+            id: 'pie',
+            label: {
+              formatter: `{b}: {@[${dimension}]} ({d}%)`,
+            },
+            encode: {
+              value: dimension,
+              tooltip: dimension,
+            },
+          },
+        });
+      }
+    });
 
     return () => {
       chartInstance.dispose();
@@ -87,18 +95,18 @@ const MaterialType = () => {
   }, []);
 
   return (
-<div className="w-full h-[26rem] p-4 flex flex-col  border border-gray-200 rounded-md">
-  <h1 className="text-xl font-bold mb-4 text-start">Material Type Wise</h1>
-
-  <div className="flex-grow flex items-center justify-center">
-    <div
-      ref={chartRef}
-      style={{ width: '100%', height: '320px' }}
-      className="bg-white rounded "
-    />
-  </div>
-</div>
-
+    <div className="w-full h-[26rem] flex flex-col border border-gray-200 rounded-md">
+      <div className='p-4'>
+        <h1 className="text-xl font-bold mb-4 text-start">Material Type Wise</h1>
+      </div>
+      <div className="flex-grow w-full  flex items-center justify-center">
+        <div
+          ref={chartRef}
+          style={{ width: '100%', height: '320px' }}
+          className="bg-white rounded"
+        />
+      </div>
+    </div>
   );
 };
 
